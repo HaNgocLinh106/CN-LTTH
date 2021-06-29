@@ -45,6 +45,8 @@ import { TasksComponent } from './tasks/tasks.component';
 import { AddOrEditTaskModelComponent } from './tasks/add-or-edit-task-model.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.component';
+// import { EmployeesComponent } from './employees/employees.component';
+// import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.component';
 // Dialog
 @NgModule({
   declarations: [
@@ -78,7 +80,7 @@ import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.com
     TasksComponent,
     AddOrEditTaskModelComponent,
     EmployeesComponent,
-    AddOrEditEmployeeComponent
+    AddOrEditEmployeeComponent,
   ],
   imports: [
     CommonModule,

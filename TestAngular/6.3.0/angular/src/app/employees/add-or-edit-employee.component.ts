@@ -19,7 +19,7 @@ export class AddOrEditEmployeeComponent extends AppComponentBase implements OnIn
 @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 active= false;
 saving= false;
-task: CreateEmployeeInput= new CreateEmployeeInput();
+employee: CreateEmployeeInput= new CreateEmployeeInput();
   constructor(injector:Injector, private employeeService: EmployeeServiceProxy) { 
     super(injector);
       this.employeeEdit=null;
@@ -32,7 +32,7 @@ task: CreateEmployeeInput= new CreateEmployeeInput();
   save():void{
     this.saving=true;
     if(this.employeeEdit==null){
-      this.employeeService.createEmployee(this.task)
+      this.employeeService.createEmployee(this.employee)
       .pipe(
         finalize(()=>{
         this.saving=false;
