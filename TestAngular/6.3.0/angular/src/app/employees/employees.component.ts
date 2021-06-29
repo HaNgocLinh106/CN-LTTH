@@ -2,7 +2,8 @@ import { result } from 'lodash-es';
 import { EmployeeServiceProxy, EmployeeListDto } from './../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AddOrEditEmployeeModelComponent } from './add-or-edit-employee-model/add-or-edit-employee-model.component';
+import { AddOrEditEmployeeComponent } from './add-or-edit-employee.component';
+
 
 @Component({
   selector: 'app-employees',
@@ -11,7 +12,7 @@ import { AddOrEditEmployeeModelComponent } from './add-or-edit-employee-model/ad
 })
 export class EmployeesComponent extends AppComponentBase implements OnInit {
   employees: EmployeeListDto[]=[];
-   @ViewChild('addOrEditEmployeeModal') addOrEditEmployeeModal:AddOrEditEmployeeModelComponent;
+   @ViewChild('addOrEditEmployeeModal') addOrEditEmployeeModal:AddOrEditEmployeeComponent;
   constructor(injector:Injector, private employeeService:EmployeeServiceProxy) {
     super(injector);
    }

@@ -44,7 +44,7 @@ import {TaskServiceProxy} from '@shared/service-proxies/service-proxies';
 import { TasksComponent } from './tasks/tasks.component';
 import { AddOrEditTaskModelComponent } from './tasks/add-or-edit-task-model.component';
 import { EmployeesComponent } from './employees/employees.component';
-import { AddOrEditEmployeeModelComponent } from './employees/add-or-edit-employee-model/add-or-edit-employee-model.component';
+import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.component';
 // Dialog
 @NgModule({
   declarations: [
@@ -78,7 +78,7 @@ import { AddOrEditEmployeeModelComponent } from './employees/add-or-edit-employe
     TasksComponent,
     AddOrEditTaskModelComponent,
     EmployeesComponent,
-    AddOrEditEmployeeModelComponent
+    AddOrEditEmployeeComponent
   ],
   imports: [
     CommonModule,
