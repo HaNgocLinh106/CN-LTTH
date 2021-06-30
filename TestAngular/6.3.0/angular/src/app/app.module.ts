@@ -45,6 +45,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { AddOrEditTaskModelComponent } from './tasks/add-or-edit-task-model.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.component';
+import { ListEmployeeComponent } from './employees/list-employee.component';
 // import { EmployeesComponent } from './employees/employees.component';
 // import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.component';
 // Dialog
@@ -81,6 +82,7 @@ import { AddOrEditEmployeeComponent } from './employees/add-or-edit-employee.com
     AddOrEditTaskModelComponent,
     EmployeesComponent,
     AddOrEditEmployeeComponent,
+    ListEmployeeComponent,
   ],
   imports: [
     CommonModule,

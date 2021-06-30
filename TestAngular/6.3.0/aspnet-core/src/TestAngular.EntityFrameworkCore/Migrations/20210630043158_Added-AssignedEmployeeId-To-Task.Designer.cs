@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestAngular.EntityFrameworkCore;
 
 namespace TestAngular.Migrations
 {
     [DbContext(typeof(TestAngularDbContext))]
-    partial class TestAngularDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210630043158_Added-AssignedEmployeeId-To-Task")]
+    partial class AddedAssignedEmployeeIdToTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

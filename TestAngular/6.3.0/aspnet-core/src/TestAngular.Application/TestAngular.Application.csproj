@@ -11,6 +11,11 @@
     <RootNamespace>TestAngular</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="WebGrease" Version="1.6.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\TestAngular.Core\TestAngular.Core.csproj" />
+    <ProjectReference Include="..\TestAngular.EntityFrameworkCore\TestAngular.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>

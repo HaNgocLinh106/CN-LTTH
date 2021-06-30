@@ -24,6 +24,7 @@ namespace TestAngular.Tasks
         public async Task<ListResultDto<TaskListDto>> GetAll(GetAllTaskInput input) {
             var tasks = await _taskRepository
                 .GetAll()
+                 .Include(t => t.AssignedEmployee)
                 .WhereIf(input.State.HasValue, task => task.State == input.State.Value)
                 .OrderByDescending(task => task.CreationTime)
                 .ToListAsync();

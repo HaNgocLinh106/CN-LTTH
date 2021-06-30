@@ -8,7 +8,7 @@ import { CreateEmployeeInput, EmployeeServiceProxy, UpdateEmployeeInput } from '
 import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'add-or-edit-employee',
+  selector: 'addOrEditEmployee',
   templateUrl: './add-or-edit-employee.component.html',
   styleUrls: ['./add-or-edit-employee.component.css']
 })
@@ -43,6 +43,7 @@ employee: CreateEmployeeInput= new CreateEmployeeInput();
       });
     }
     else{
+      console.log("birth = ", this.employeeEdit.birthDate);
       this.employeeService.updateEmployee(this.employeeEdit)
       .pipe(
         finalize(()=>{

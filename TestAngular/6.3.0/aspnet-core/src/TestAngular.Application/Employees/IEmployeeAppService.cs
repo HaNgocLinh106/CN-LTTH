@@ -16,6 +16,6 @@ namespace TestAngular.Employees
         EmployeeListDto GetEmployee(GetEmployeeInput input);
         Task UpdateEmployee(UpdateEmployeeInput input);
         Task DeleteEmployee(DeleteEmployeeInput input);
-
+        void GetAll1();
     }
 }

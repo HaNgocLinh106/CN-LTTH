@@ -10,13 +10,44 @@ using System.Threading.Tasks;
 namespace TestAngular.Employees.DTO
 {
     [AutoMapFrom(typeof(Employee))]
+
+    public class EmployeeListDto2 : EntityDto
+    {
+    
+        public const int maxLengthName = 32;
+        [StringLength(Employee.maxNameLenght)]
+        public string name { get; set; }
+        public int Age { get; set; }
+        public int totalStateOpen { get; set; }
+        public int totalStatecomponent { get; set; }
+
+
+
+    }
+    [AutoMapFrom(typeof(Employee))]
+   
     public class EmployeeListDto : EntityDto
     {
-      
+        private DateTime currentDate = DateTime.Now;
+
         public const int maxLengthName = 32;
         [StringLength(Employee.maxNameLenght)]
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
+        private int Age
+        {
+            get
+            {
+                int age;
+                age = DateTime.Now.Year - BirthDate.Year;
+                if (DateTime.Now.DayOfYear < BirthDate.DayOfYear)
+                    age = age - 1;
+
+                return age;
+            }
+           
+        }
+
 
     }
 

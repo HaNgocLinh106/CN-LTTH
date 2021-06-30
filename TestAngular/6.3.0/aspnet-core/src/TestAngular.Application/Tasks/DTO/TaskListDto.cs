@@ -21,6 +21,9 @@ namespace TestAngular.Tasks.DTO
         public string Description { get; set; }
         public DateTime CreationTime { get; set; }
         public TaskState State { get; set; }
+        public int? AssignedEmployeeId { get; set; }
+
+        public string AssignedEmployeeName { get; set; }
     }
     public class GetAllTaskInput
     {
@@ -33,6 +36,7 @@ namespace TestAngular.Tasks.DTO
         {
             this.TenantId = 1;
         }
+        public int? AssignedEmployeeId { get; set; }
         [MaxLength(TaskEntityConfiguration.TitleMaxLength)]
         public string Title { get; set; }
         [MaxLength(TaskEntityConfiguration.DescriptionMaxLengh)]
@@ -54,6 +58,7 @@ namespace TestAngular.Tasks.DTO
         public string Title { get; set; }
 
         public string Description { get; set; }
+        public int? AssignedEmployeeId { get; set; }
         //public TaskState State { get; set; }
     }
     public class DeleteTaskInput

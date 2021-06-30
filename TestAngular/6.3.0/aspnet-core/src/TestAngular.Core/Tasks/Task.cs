@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
+using TestAngular.Employees;
 using TestAngular.Tasks;
 
 namespace Acme.SimpleTaskApp.Tasks
@@ -32,13 +33,16 @@ namespace Acme.SimpleTaskApp.Tasks
             State = TaskState.Open;
             TenantId = 1;
         }
-
-        public Task(int tenantId, string title, string description = null)
+        [ForeignKey(nameof(AssignedEmployeeId))]
+        public Employee AssignedEmployee { get; set; } // them tu Employee table
+        public int? AssignedEmployeeId { get; set; }
+        public Task(int tenantId, string title, string description = null, int? assignedEmployeeId=null)
             : this()
         {
             TenantId = tenantId;
             Title = title;
             Description = description;
+            AssignedEmployeeId = assignedEmployeeId;
         }
     }
 

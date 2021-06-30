@@ -1,28 +1,28 @@
 <div class="row">
     <div>
-        <button class="btn btn-primary margin-bottom-10" type="button" (click)="showEmployeeModal()">{{('NewTask')}}</button>
+        <button class="btn btn-primary margin-bottom-10" type="button" (click)="showEmployeeModal()">{{('NewEmployee')}}</button>
         <ul class="list-group" id="EmployeeList">
 
             <li *ngFor="let employee of employees" class="list-group-item">
                 <!-- <span class="pull-right label" >{{getTaskState(task)}}</span> -->
-                <h4 class="list-group-item-heading">{{employee.name}}</h4>
+                <h4 class="list-group-item-heading" (click)="getEmployee(employee)">{{employee.name}}</h4>
                 <div class="list-group-item-text">
                     {{employee.birthDate?.format('LLL')}}
                 </div>
-                <!-- <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button> -->
+                <button class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
             </li>
         </ul>
     </div>
 </div>
-<addOrEditEmployeeModal [employeeEdit]="employeeEdit" #addOrEditEmployeeModal (modalSave)="onEmployeeUpdated($event)"></addOrEditEmployeeModal>
-<!-- <addOrEditTaskModal [taskEdit]="taskEdit" #addOrEditTaskModal (modalSave)="onTaskUpdated($event)"></addOrEditTaskModal>
-<div bsModal="" #deleteTaskModal="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="deleteTaskModal" aria-hidden="true">
+<addOrEditEmployee [employeeEdit]="employeeEdit" #addOrEditEmployeeModal (modalSave)="onEmployeeUpdated($event)"></addOrEditEmployee>
+<!-- <addOrEditTaskModal [taskEdit]="taskEdit" #addOrEditTaskModal (modalSave)="onTaskUpdated($event)"></addOrEditTaskModal> -->
+<div bsModal="" #deleteEmployeeModal="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="deleteEmployeeModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-body">
                 <h4 class="modal-title">
-                    <span>Do you want to delete this task</span>
+                    <span>Do you want to delete this employee</span>
                 </h4>
             </div>
             <div class="modal-footer">
@@ -35,4 +35,4 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>

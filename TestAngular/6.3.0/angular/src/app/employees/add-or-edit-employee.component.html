@@ -26,10 +26,10 @@
                             </div>
                             <label>{{l("BirthDate")}}</label>
                             <div class="form-group form-md-line-input form-md-floating-label no-hint" *ngIf="employeeEdit==null">
-                                <input type="date" name="birthDate" class="form-control">
+                                <input type="date" name="birthDate" class="form-control" [(ngModel)]="employee.birthDate">
                             </div>
                             <div class="form-group form-md-line-input form-md-floating-label no-hint" *ngIf="employeeEdit!=null">
-                                <input type="date" name="birthDate" class="form-control">
+                                <input type="date" name="birthDate" class="form-control"  [(ngModel)]="employeeEdit.birthDate">
                             </div>
                         </div>
                     </div>

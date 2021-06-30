@@ -14,17 +14,19 @@
                 </li>
                 <li *ngFor="let task of tasks" class="list-group-item">
                     <span class="pull-right label" [ngClass]="getTaskLabel(task)">{{getTaskState(task)}}</span>
-                    <h4 class="list-group-item-heading" (click)="getTask(task)" >{{task.title}}</h4>
+                    <h4 class="list-group-item-heading" (click)="getTask(task,1)" >{{task.title}}</h4>
                     <div class="list-group-item-text">
-                        {{task.creationTime?.format('LLL')}}
-                    </div>
+                        {{task.creationTime?.format('LLL')}}|{{task.assignedEmployeeName?task.assignedEmployeeName:l('Unassigned')}}
+                    </div>        
+                        <button class="btn btn-primary" *ngIf="!task.assignedEmployeeName" (click)="getTask(task,0)">Assign</button>
                     <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>
                 </li>
         </ul>
     </div>
 </div>
-
+<!-- Modal-add-or-edit-task -->
 <addOrEditTaskModal [taskEdit]="taskEdit" #addOrEditTaskModal (modalSave)="onTaskUpdated($event)"></addOrEditTaskModal>
+<!-- Modal delete Task -->
 <div  bsModal="" #deleteTaskModal="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="deleteTaskModal" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
@@ -40,6 +42,34 @@
                     </button>
                     <button type="button" class="btn btn-primary blue" (click)="accept()">
                         <span>{{l("Yes")}}</span>
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- Modal-show-list-employee -->
+<div  bsModal="" #listEmployee="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="listEmployee" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Select Employee
+                </h4>
+            </div>
+                    <ul class="list-group">
+                          <li class="list-group-item"  *ngFor="let employee of employees">
+                            <input type="radio" [(ngModel)]="selectedEmployee" name="list_name" value="{{employee.id}}"/> 
+                            {{employee.name}}  
+                          </li>
+                    </ul>
+             
+                  
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-default" (click)="close()">
+                        {{l("Cancel")}}
+                    </button>
+                    <button type="button" class="btn btn-primary blue" (click)="saveTaskAssigned()">
+                        <span>{{l("Save")}}</span>
                     </button>
                 </div>
         </div>

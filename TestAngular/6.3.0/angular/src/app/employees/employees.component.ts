@@ -5,6 +5,7 @@ import { EmployeeListDto, EmployeeServiceProxy } from '@shared/service-proxies/s
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { AddOrEditEmployeeComponent } from './add-or-edit-employee.component';
 
+
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -13,64 +14,62 @@ import { AddOrEditEmployeeComponent } from './add-or-edit-employee.component';
 export class EmployeesComponent extends AppComponentBase implements OnInit {
   employees:EmployeeListDto[]=[];
   employeeEdit: EmployeeListDto;
-  taskDelete:EmployeeListDto;
+  employeeDelete:EmployeeListDto;
 
      @ViewChild('addOrEditEmployeeModal') addOrEditEmployeeModal:AddOrEditEmployeeComponent;
     @ViewChild('deleteEmployeeModal') deleteEmployeeModal:ModalDirective;
-  constructor(injector:Injector, private taskService: EmployeeServiceProxy) { 
+  constructor(injector:Injector, private employeeService: EmployeeServiceProxy) { 
     super(injector);
   }
 
   ngOnInit(): void {
-   this.getTasks();
+   this.getEmployees();
   }
-  getTasks(){
-    this.taskService.getAll().subscribe(result =>{
+  getEmployees(){
+    this.employeeService.getAll().subscribe(result =>{
       this.employees= result.items;
     })
   }
-//   getTask(employee:EmployeeListDto){
-//       this.taskService.getEmployee(employee.id)
-//       .subscribe(result =>{
-//        this.setEmployeeEdit(result);
+  getEmployee(employee:EmployeeListDto){
+      this.employeeService.getEmployee(employee.id)
+      .subscribe(result =>{
+       this.setEmployeeEdit(result);
        
-//       });
-      
-//       this.showTaskModal();
+      });
+      this.showEmployeeModal();
      
-//   }
-//   deleteEmployee(task:EmployeeListDto){
-//     this.deleteEmployeeModal.show();
-//     this.taskDelete= task;
-//     console.log("task 1=",this.taskDelete )
-//   }
-//   setEmployeeEdit(value: any) {
-//     this.employeeEdit = value;
-//     console.log("task 1=", this.employeeEdit);
-// }
+  }
+  deleteEmployee(employee:EmployeeListDto){
+    this.deleteEmployeeModal.show();
+    this.employeeDelete= employee;
+  }
+  setEmployeeEdit(value: any) {
+    this.employeeEdit = value;
+     this.employeeEdit.birthDate=value["birthDate"]? value["birthDate"].format("YYYY-MM-DD"):<any>undefined;
+}
  
   showEmployeeModal(){
     this.addOrEditEmployeeModal.Show();
   }
- onTaskUpdated(input:any){
+ onEmployeeUpdated(input:any){
    if(this.employeeEdit==null){
     this.employees.push(input);
    
    }
-   this.getTasks();
+   this.getEmployees();
    this.notify.success(this.l('SavedSuccessully'));
  }
-//  cancel(){
-//   this.deleteTaskModal.hide();
-// }
-// accept(){
-//     this.taskService.delete(this.taskDelete.id)
-//     .subscribe(result =>{
-//       this.deleteTaskModal.hide();
-//       this.getTasks();
-//       this.notify.success(this.l('DeletedSuccessully'));
-//     });
+ cancel(){
+  this.deleteEmployeeModal.hide();
+}
+accept(){
+    this.employeeService.deleteEmployee(this.employeeDelete.id)
+    .subscribe(result =>{
+      this.deleteEmployeeModal.hide();
+      this.getEmployees();
+      this.notify.success(this.l('DeletedSuccessully'));
+    });
 
-// }
+}
 }
 

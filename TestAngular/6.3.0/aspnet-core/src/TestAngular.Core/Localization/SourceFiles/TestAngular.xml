@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="BirthDate" value="Birth Date" />
     <text name="NewTask" value="New task" />
     <text name="NewEmployee" value="New employee" />
     <text name="CreateNewTask" value="Create new task" />
+    <text name="CreateNewEmployee" value="Create new employee" />
     <text name="EditTask" value="Edit task" />
+    <text name="EditEmployee" value="Edit employee" />
     <text name="SavedSuccessully" value="Saved Successully" />
     <text name="DeletedSuccessully" value="Deleted Successully" />
     <text name="AllTasks" value="All Tasks" />

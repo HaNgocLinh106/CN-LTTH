@@ -3656,6 +3656,8 @@ export class TaskListDto implements ITaskListDto {
     description: string | undefined;
     creationTime: moment.Moment;
     state: TaskState;
+    assignedEmployeeId: number | undefined;
+    assignedEmployeeName: string | undefined;
     id: number;
 
     constructor(data?: ITaskListDto) {
@@ -3674,6 +3676,8 @@ export class TaskListDto implements ITaskListDto {
             this.description = _data["description"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.state = _data["state"];
+            this.assignedEmployeeId = _data["assignedEmployeeId"];
+            this.assignedEmployeeName = _data["assignedEmployeeName"];
             this.id = _data["id"];
         }
     }
@@ -3692,6 +3696,8 @@ export class TaskListDto implements ITaskListDto {
         data["description"] = this.description;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["state"] = this.state;
+        data["assignedEmployeeId"] = this.assignedEmployeeId;
+        data["assignedEmployeeName"] = this.assignedEmployeeName;
         data["id"] = this.id;
         return data; 
     }
@@ -3710,6 +3716,8 @@ export interface ITaskListDto {
     description: string | undefined;
     creationTime: moment.Moment;
     state: TaskState;
+    assignedEmployeeId: number | undefined;
+    assignedEmployeeName: string | undefined;
     id: number;
 }
 
@@ -3765,6 +3773,7 @@ export interface ITaskListDtoListResultDto {
 }
 
 export class CreateTaskInput implements ICreateTaskInput {
+    assignedEmployeeId: number | undefined;
     title: string | undefined;
     description: string | undefined;
     tenantId: number;
@@ -3781,6 +3790,7 @@ export class CreateTaskInput implements ICreateTaskInput {
 
     init(_data?: any) {
         if (_data) {
+            this.assignedEmployeeId = _data["assignedEmployeeId"];
             this.title = _data["title"];
             this.description = _data["description"];
             this.tenantId = _data["tenantId"];
@@ -3797,6 +3807,7 @@ export class CreateTaskInput implements ICreateTaskInput {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["assignedEmployeeId"] = this.assignedEmployeeId;
         data["title"] = this.title;
         data["description"] = this.description;
         data["tenantId"] = this.tenantId;
@@ -3813,6 +3824,7 @@ export class CreateTaskInput implements ICreateTaskInput {
 }
 
 export interface ICreateTaskInput {
+    assignedEmployeeId: number | undefined;
     title: string | undefined;
     description: string | undefined;
     tenantId: number;
@@ -3823,6 +3835,7 @@ export class UpdateTaskInput implements IUpdateTaskInput {
     id: number;
     title: string | undefined;
     description: string | undefined;
+    assignedEmployeeId: number | undefined;
 
     constructor(data?: IUpdateTaskInput) {
         if (data) {
@@ -3838,6 +3851,7 @@ export class UpdateTaskInput implements IUpdateTaskInput {
             this.id = _data["id"];
             this.title = _data["title"];
             this.description = _data["description"];
+            this.assignedEmployeeId = _data["assignedEmployeeId"];
         }
     }
 
@@ -3853,6 +3867,7 @@ export class UpdateTaskInput implements IUpdateTaskInput {
         data["id"] = this.id;
         data["title"] = this.title;
         data["description"] = this.description;
+        data["assignedEmployeeId"] = this.assignedEmployeeId;
         return data; 
     }
 
@@ -3868,6 +3883,7 @@ export interface IUpdateTaskInput {
     id: number;
     title: string | undefined;
     description: string | undefined;
+    assignedEmployeeId: number | undefined;
 }
 
 export class CreateTenantDto implements ICreateTenantDto {
