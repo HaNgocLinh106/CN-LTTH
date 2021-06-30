@@ -12,6 +12,7 @@ using Acme.SimpleTaskApp.Tasks;
 using System.Threading.Tasks;
 using Abp.UI;
 using TestAngular.EntityFrameworkCore;
+using TestAngular.Employees.DTO;
 
 namespace TestAngular.Tasks
 {
@@ -41,35 +42,29 @@ namespace TestAngular.Tasks
                 throw (e);
             }
         }
-        public void GetAll1()
+        public List<EmployeeListDetailDto> GetListEmployee()
         {
-            var a = 1;
-
-            //var pageObject = (from t in _context.Tasks
-            //                  join emp in _context.Employees on t.AssignedEmployeeId equals emp.Id
-
-            //                  select emp.Id)
-            //     .SingleOrDefault();
-
-
-            var result = _taskRepository.GetAll()
+            var result = new List<EmployeeListDetailDto>(){};
+             result = _taskRepository.GetAll()
                             .Where(s => s.AssignedEmployeeId.HasValue)
                             .Select(e => new
                             {
                                 EmployeeId = e.AssignedEmployeeId,
                                 EmployeeName = e.AssignedEmployee.Name,
+                                Age = e.AssignedEmployee.BirthDate,
                                 e.State
                             })
-                            .GroupBy(l => new { l.EmployeeId, l.EmployeeName })
-                            .Select(cl => new
+                            .GroupBy(l => new { l.EmployeeId, l.EmployeeName , l.Age})
+                            .Select(cl => new EmployeeListDetailDto
                             {
                                 EmployeeId = cl.Key.EmployeeId,
                                 EmployeeName = cl.Key.EmployeeName,
-                                TaskPending = cl.Where(x => x.State == TaskState.Open).Count().ToString(),
-                                TaskComplit = cl.Where(y => y.State == TaskState.Completed).Count().ToString(),
+                                Age= DateTime.Today.Year- cl.Key.Age.Year,
+                                TaskPending = cl.Where(x => x.State == TaskState.Open).Count(),
+                                TaskComplete = cl.Where(y => y.State == TaskState.Completed).Count(),
                             }).ToList();
-            var acb = 1;
 
+            return result;
         }
 
         public async Task<TaskListDto> Create(CreateTaskInput input)

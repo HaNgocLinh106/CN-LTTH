@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestAngular.Employees.DTO;
 using TestAngular.Tasks.DTO;
 
 namespace TestAngular.Tasks
@@ -15,5 +16,6 @@ namespace TestAngular.Tasks
         TaskListDto GetTask(GetTaskInput input);
         Task Delete(DeleteTaskInput input);
         Task Update(UpdateTaskInput input);
+        List<EmployeeListDetailDto> GetListEmployee();
         }
 }

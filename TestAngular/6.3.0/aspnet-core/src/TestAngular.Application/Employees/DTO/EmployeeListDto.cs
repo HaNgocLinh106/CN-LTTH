@@ -11,15 +11,15 @@ namespace TestAngular.Employees.DTO
 {
     [AutoMapFrom(typeof(Employee))]
 
-    public class EmployeeListDto2 : EntityDto
+    public class EmployeeListDetailDto : EntityDto
     {
-    
+        public int? EmployeeId { get; set; }
         public const int maxLengthName = 32;
         [StringLength(Employee.maxNameLenght)]
-        public string name { get; set; }
+        public string EmployeeName { get; set; }
         public int Age { get; set; }
-        public int totalStateOpen { get; set; }
-        public int totalStatecomponent { get; set; }
+        public int TaskPending { get; set; }
+        public int TaskComplete { get; set; }
 
 
 
