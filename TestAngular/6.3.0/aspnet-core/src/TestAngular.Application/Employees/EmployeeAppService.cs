@@ -15,13 +15,10 @@ namespace TestAngular.Employees
     public class EmployeeAppService : TestAngularAppServiceBase, IEmployeeAppService
     {
         private readonly IRepository<Employee> _employeeRepository;
-        private readonly IRepository<Acme.SimpleTaskApp.Tasks.Task> _taskRepository;
-        private readonly TestAngularDbContext _context;
-        public EmployeeAppService(IRepository<Employee> employeeRepository, IRepository<Acme.SimpleTaskApp.Tasks.Task> taskRepository, TestAngularDbContext context)
+      
+        public EmployeeAppService(IRepository<Employee> employeeRepository)
         {
             _employeeRepository = employeeRepository;
-            _taskRepository = taskRepository;
-            _context = context;
         }
         public async Task<ListResultDto<EmployeeListDto>> GetAll()
         {
@@ -39,16 +36,16 @@ namespace TestAngular.Employees
           
         }
 
-        public void GetAll1()
-        {
-            var a = 1;
+        //public void GetAll1()
+        //{
+        //    var a = 1;
 
-            var pageObject = (from t in _context.Tasks
-                              join emp in _context.Employees on t.AssignedEmployeeId equals emp.Id
+        //    var pageObject = (from t in _context.Tasks
+        //                      join emp in _context.Employees on t.AssignedEmployeeId equals emp.Id
                           
-                              select emp.Id)
-                 .SingleOrDefault();
-        }
+        //                      select emp.Id)
+        //         .SingleOrDefault();
+        //}
 
         public async System.Threading.Tasks.Task CreateEmployee(CreateEmployeeInput input)
         {

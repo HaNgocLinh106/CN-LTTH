@@ -11,6 +11,7 @@ using System;
 using Acme.SimpleTaskApp.Tasks;
 using System.Threading.Tasks;
 using Abp.UI;
+using TestAngular.EntityFrameworkCore;
 
 namespace TestAngular.Tasks
 {
@@ -21,7 +22,8 @@ namespace TestAngular.Tasks
         {
             _taskRepository = taskRepository;
         }
-        public async Task<ListResultDto<TaskListDto>> GetAll(GetAllTaskInput input) {
+        public async Task<ListResultDto<TaskListDto>> GetAll(GetAllTaskInput input)
+        {
             var tasks = await _taskRepository
                 .GetAll()
                  .Include(t => t.AssignedEmployee)
@@ -34,17 +36,48 @@ namespace TestAngular.Tasks
 
                 return new ListResultDto<TaskListDto>(dtos);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw (e);
             }
         }
+        public void GetAll1()
+        {
+            var a = 1;
+
+            //var pageObject = (from t in _context.Tasks
+            //                  join emp in _context.Employees on t.AssignedEmployeeId equals emp.Id
+
+            //                  select emp.Id)
+            //     .SingleOrDefault();
+
+
+            var result = _taskRepository.GetAll()
+                            .Where(s => s.AssignedEmployeeId.HasValue)
+                            .Select(e => new
+                            {
+                                EmployeeId = e.AssignedEmployeeId,
+                                EmployeeName = e.AssignedEmployee.Name,
+                                e.State
+                            })
+                            .GroupBy(l => new { l.EmployeeId, l.EmployeeName })
+                            .Select(cl => new
+                            {
+                                EmployeeId = cl.Key.EmployeeId,
+                                EmployeeName = cl.Key.EmployeeName,
+                                TaskPending = cl.Where(x => x.State == TaskState.Open).Count().ToString(),
+                                TaskComplit = cl.Where(y => y.State == TaskState.Completed).Count().ToString(),
+                            }).ToList();
+            var acb = 1;
+
+        }
+
         public async Task<TaskListDto> Create(CreateTaskInput input)
         {
             try
             {
                 input.TenantId = 1;
-                input.State = TaskState.Completed; 
+                input.State = TaskState.Completed;
                 var task = ObjectMapper.Map<Acme.SimpleTaskApp.Tasks.Task>(input);
                 await _taskRepository.InsertAsync(task);
                 await CurrentUnitOfWork.SaveChangesAsync();
