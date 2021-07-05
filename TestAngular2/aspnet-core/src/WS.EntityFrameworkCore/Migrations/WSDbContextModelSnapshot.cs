@@ -9,11 +9,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
+using System;
 using WS.Chat;
 using WS.EntityFrameworkCore;
 using WS.Friendships;
 using WS.MultiTenancy.Payments;
-using System;
+using WS.Tasks;
 
 namespace WS.Migrations
 {
@@ -79,6 +80,8 @@ namespace WS.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128);
+
+                    b.Property<int?>("TenantId");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -966,6 +969,24 @@ namespace WS.Migrations
                     b.ToTable("AppChatMessages");
                 });
 
+            modelBuilder.Entity("WS.Employees.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppEmployees");
+                });
+
             modelBuilder.Entity("WS.Friendships.Friendship", b =>
                 {
                     b.Property<long>("Id")
@@ -1153,6 +1174,33 @@ namespace WS.Migrations
                     b.ToTable("AppBinaryObjects");
                 });
 
+            modelBuilder.Entity("WS.Tasks.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AssignedEmployeeId");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(65536);
+
+                    b.Property<byte>("State");
+
+                    b.Property<int>("TenantId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedEmployeeId");
+
+                    b.ToTable("AppTasks");
+                });
+
             modelBuilder.Entity("WS.Editions.SubscribableEdition", b =>
                 {
                     b.HasBaseType("Abp.Application.Editions.Edition");
@@ -1189,7 +1237,6 @@ namespace WS.Migrations
                 {
                     b.HasBaseType("Abp.Application.Features.FeatureSetting");
 
-                    b.Property<int>("TenantId");
 
                     b.HasIndex("TenantId", "Name");
 
@@ -1333,6 +1380,13 @@ namespace WS.Migrations
                     b.HasOne("WS.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
+                });
+
+            modelBuilder.Entity("WS.Tasks.Task", b =>
+                {
+                    b.HasOne("WS.Employees.Employee", "AssignedEmployee")
+                        .WithMany()
+                        .HasForeignKey("AssignedEmployeeId");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
