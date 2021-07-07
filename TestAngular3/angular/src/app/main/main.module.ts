@@ -1,5 +1,5 @@
 import { AddOrEditTaskModelComponent } from './tasks/add-or-edit-task-model.component';
-import { TaskServiceProxy, EmployeeServiceProxy } from './../../shared/service-proxies/service-proxies';
+import { TaskServiceProxy, EmployeeServiceProxy, Task2ServiceProxy } from './../../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +17,9 @@ import { TestComponent } from './test/test.component';
 
  import {DataTableModule,SharedModule} from 'primeng/primeng';
  import {CheckboxModule} from 'primeng/primeng';
+import { TasksTestComponent } from './tasks-test/tasks-test.component';
+import { AddOrEditTaskTestModelComponent } from './tasks-test/add-or-edit-task-test-model.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -38,11 +41,14 @@ import { TestComponent } from './test/test.component';
          EmployeesComponent,
         AddOrEditTaskModelComponent,
          AddOrEditEmployeeComponent,
-        TestComponent
+        TestComponent,
+        TasksTestComponent,
+        AddOrEditTaskTestModelComponent
     ],
     providers:[
         TaskServiceProxy,
-        EmployeeServiceProxy
+        EmployeeServiceProxy,
+        Task2ServiceProxy
     ]
 })
 export class MainModule { }

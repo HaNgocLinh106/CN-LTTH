@@ -27,8 +27,6 @@
                           <button class="btn btn-primary" *ngIf="!task.assignedEmployeeName" (click)="getTask(task,0)">Assign</button>
                         </div>   
                   </div>
-                       
-                 
               </li>
       </ul>
   </div>
@@ -71,8 +69,6 @@
                           {{employee.name}}  
                         </li>
                   </ul>
-           
-                
               <div class="modal-footer">
                   <button  type="button" class="btn btn-default" (click)="close()">
                       {{l("Cancel")}}

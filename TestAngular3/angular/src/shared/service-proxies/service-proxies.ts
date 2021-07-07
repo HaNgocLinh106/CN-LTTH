@@ -5116,6 +5116,297 @@ export class TaskServiceProxy {
 }
 
 @Injectable()
+export class Task2ServiceProxy {
+    private http: Http;
+    private baseUrl: string;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getAllTaskDetail(state: State3): Observable<ListResultDtoOfTaskListDto2> {
+        let url_ = this.baseUrl + "/api/services/app/Task2/GetAllTaskDetail?";
+        if (state !== undefined)
+            url_ += "State=" + encodeURIComponent("" + state) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetAllTaskDetail(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetAllTaskDetail(response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfTaskListDto2>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfTaskListDto2>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAllTaskDetail(response: Response): Observable<ListResultDtoOfTaskListDto2> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListResultDtoOfTaskListDto2.fromJS(resultData200) : new ListResultDtoOfTaskListDto2();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<ListResultDtoOfTaskListDto2>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    create(input: CreateTaskInput2): Observable<TaskListDto2> {
+        let url_ = this.baseUrl + "/api/services/app/Task2/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processCreate(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processCreate(response_);
+                } catch (e) {
+                    return <Observable<TaskListDto2>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<TaskListDto2>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processCreate(response: Response): Observable<TaskListDto2> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TaskListDto2.fromJS(resultData200) : new TaskListDto2();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<TaskListDto2>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getTask(id: number): Observable<TaskListDto2> {
+        let url_ = this.baseUrl + "/api/services/app/Task2/GetTask?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetTask(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetTask(response_);
+                } catch (e) {
+                    return <Observable<TaskListDto2>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<TaskListDto2>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetTask(response: Response): Observable<TaskListDto2> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TaskListDto2.fromJS(resultData200) : new TaskListDto2();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<TaskListDto2>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    update(input: UpdateTaskInput2): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Task2/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processUpdate(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processUpdate(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdate(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    assignTask(input: AssignTaskInput2): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Task2/AssignTask";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processAssignTask(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processAssignTask(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processAssignTask(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    delete(id: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Task2/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "delete",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processDelete(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processDelete(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processDelete(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class TenantServiceProxy {
     private http: Http;
     private baseUrl: string;
@@ -9570,6 +9861,7 @@ export interface IListResultDtoOfEmployeeListDto {
 export class EmployeeListDto implements IEmployeeListDto {
     name: string;
     birthDate: moment.Moment;
+    creationTime: moment.Moment;
     id: number;
 
     constructor(data?: IEmployeeListDto) {
@@ -9585,6 +9877,7 @@ export class EmployeeListDto implements IEmployeeListDto {
         if (data) {
             this.name = data["name"];
             this.birthDate = data["birthDate"] ? moment(data["birthDate"].toString()) : <any>undefined;
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
             this.id = data["id"];
         }
     }
@@ -9599,6 +9892,7 @@ export class EmployeeListDto implements IEmployeeListDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["birthDate"] = this.birthDate ? this.birthDate.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -9607,6 +9901,7 @@ export class EmployeeListDto implements IEmployeeListDto {
 export interface IEmployeeListDto {
     name: string;
     birthDate: moment.Moment;
+    creationTime: moment.Moment;
     id: number;
 }
 
@@ -13954,6 +14249,269 @@ export interface IUpdateTaskInput {
     state: UpdateTaskInputState;
 }
 
+export class ListResultDtoOfTaskListDto2 implements IListResultDtoOfTaskListDto2 {
+    items: TaskListDto2[];
+
+    constructor(data?: IListResultDtoOfTaskListDto2) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(TaskListDto2.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfTaskListDto2 {
+        let result = new ListResultDtoOfTaskListDto2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IListResultDtoOfTaskListDto2 {
+    items: TaskListDto2[];
+}
+
+export class TaskListDto2 implements ITaskListDto2 {
+    tenantId: number;
+    title: string;
+    description: string;
+    creationTime: moment.Moment;
+    state: TaskListDto2State;
+    employeeNames: string[];
+    id: number;
+
+    constructor(data?: ITaskListDto2) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.tenantId = data["tenantId"];
+            this.title = data["title"];
+            this.description = data["description"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.state = data["state"];
+            if (data["employeeNames"] && data["employeeNames"].constructor === Array) {
+                this.employeeNames = [];
+                for (let item of data["employeeNames"])
+                    this.employeeNames.push(item);
+            }
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): TaskListDto2 {
+        let result = new TaskListDto2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["state"] = this.state;
+        if (this.employeeNames && this.employeeNames.constructor === Array) {
+            data["employeeNames"] = [];
+            for (let item of this.employeeNames)
+                data["employeeNames"].push(item);
+        }
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface ITaskListDto2 {
+    tenantId: number;
+    title: string;
+    description: string;
+    creationTime: moment.Moment;
+    state: TaskListDto2State;
+    employeeNames: string[];
+    id: number;
+}
+
+export class CreateTaskInput2 implements ICreateTaskInput2 {
+    title: string;
+    description: string;
+    tenantId: number;
+    state: CreateTaskInput2State;
+
+    constructor(data?: ICreateTaskInput2) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.title = data["title"];
+            this.description = data["description"];
+            this.tenantId = data["tenantId"];
+            this.state = data["state"];
+        }
+    }
+
+    static fromJS(data: any): CreateTaskInput2 {
+        let result = new CreateTaskInput2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["tenantId"] = this.tenantId;
+        data["state"] = this.state;
+        return data; 
+    }
+}
+
+export interface ICreateTaskInput2 {
+    title: string;
+    description: string;
+    tenantId: number;
+    state: CreateTaskInput2State;
+}
+
+export class UpdateTaskInput2 implements IUpdateTaskInput2 {
+    id: number;
+    title: string;
+    description: string;
+    state: UpdateTaskInput2State;
+    employeeIds: number[];
+
+    constructor(data?: IUpdateTaskInput2) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.title = data["title"];
+            this.description = data["description"];
+            this.state = data["state"];
+            if (data["employeeIds"] && data["employeeIds"].constructor === Array) {
+                this.employeeIds = [];
+                for (let item of data["employeeIds"])
+                    this.employeeIds.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateTaskInput2 {
+        let result = new UpdateTaskInput2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["state"] = this.state;
+        if (this.employeeIds && this.employeeIds.constructor === Array) {
+            data["employeeIds"] = [];
+            for (let item of this.employeeIds)
+                data["employeeIds"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IUpdateTaskInput2 {
+    id: number;
+    title: string;
+    description: string;
+    state: UpdateTaskInput2State;
+    employeeIds: number[];
+}
+
+export class AssignTaskInput2 implements IAssignTaskInput2 {
+    id: number;
+    employeeIds: number[];
+
+    constructor(data?: IAssignTaskInput2) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            if (data["employeeIds"] && data["employeeIds"].constructor === Array) {
+                this.employeeIds = [];
+                for (let item of data["employeeIds"])
+                    this.employeeIds.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): AssignTaskInput2 {
+        let result = new AssignTaskInput2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        if (this.employeeIds && this.employeeIds.constructor === Array) {
+            data["employeeIds"] = [];
+            for (let item of this.employeeIds)
+                data["employeeIds"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IAssignTaskInput2 {
+    id: number;
+    employeeIds: number[];
+}
+
 export class PagedResultDtoOfTenantListDto implements IPagedResultDtoOfTenantListDto {
     totalCount: number;
     items: TenantListDto[];
@@ -16862,6 +17420,11 @@ export enum State2 {
     _1 = 1, 
 }
 
+export enum State3 {
+    _0 = 0, 
+    _1 = 1, 
+}
+
 export enum SalesSummaryDatePeriod {
     _1 = 1, 
     _2 = 2, 
@@ -17030,6 +17593,21 @@ export enum CreateTaskInputState {
 }
 
 export enum UpdateTaskInputState {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum TaskListDto2State {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum CreateTaskInput2State {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum UpdateTaskInput2State {
     _0 = 0, 
     _1 = 1, 
 }

@@ -23,7 +23,7 @@
   </div> -->
 </div>
 <div class="container-freature">
-  <button class="btn btn-primary margin-bottom-10" type="button" (click)="showEmployeeModal()">{{('NewEmployee')}}</button>
+  <button class="btn btn-primary margin-bottom-10" type="button" (click)="addOrEditEmployeeModal.show()">{{('NewEmployee')}}</button>
   <button class="btn btn-danger" (click)="deleteEmployee()">Delete</button>
 </div>
 
@@ -67,17 +67,32 @@
 </div>
 <!-- [(ngModel)]="selectedValues" -->
 <div class="card">
-   
-    <p-dataTable [value]="employees" [multiSortMeta]="multiSortMeta">
-        
-        <p-column > 
+    <p-dataTable [value]="employees" [multiSortMeta]="multiSortMeta" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+        <p-column >
+            <ng-template pTemplate="header">
+                <input type="checkbox" [checked]="masterCheck" value="" (click)="selectID(employee,$event)"/>
+            </ng-template>
+            <ng-template let-employee="rowData" pTemplate="body">
+                <input type="checkbox" [checked]="masterCheck" data-md-icheck  #checkdelet id="{{employee.id}" name="deletecheck" value="{{employee.id}}" (click)="selectID(employee,$event)"/>
+            </ng-template>
+        </p-column>
+        <!-- <p-column > 
           <ng-template let-row="rowData" let-index="rowIndex" let-col pTemplate="body">
             <input type="checkbox" [(ngModel)]="row[col.field]"/>
           </ng-template>
-        </p-column>
-        <p-column field="id" header="id" sortable="true"></p-column>
-        <p-column field="name" header="name" sortable="true"></p-column>
-       
+        </p-column> -->
+        <p-column field="id" header="Id" sortable="true"></p-column>
+        <p-column sortable="true" >
+            <ng-template pTemplate="header">
+               Name
+            </ng-template>
+            <ng-template let-employee="rowData" pTemplate="body" >
+                <div (click)="addOrEditEmployeeModal.show(employee.id)">  {{employee.name}}</div>
+            </ng-template>
+        </p-column>  
+        <p-column field="age" header="Age" sortable="true"></p-column>     
+        <p-column field="taskPending" header="Task Pendding" sortable="true"></p-column>      
+        <p-column field="taskComplete" header="Task Complete" sortable="true"></p-column>       
     </p-dataTable>
     
     <!-- https://stackoverflow.com/questions/52144085/customize-primeng-p-datatable-column-names -->

@@ -150,8 +150,8 @@ selectID(employee: EmployeeListDetailDto, event:any){
  
 }
 
-  showEmployeeModal(){
-    this.addOrEditEmployeeModal.Show();
+  showEmployeeModal(): void{
+    this.addOrEditEmployeeModal.show();
   }
 
  onEmployeeUpdated(input:any){

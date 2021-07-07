@@ -20,6 +20,7 @@ export class SideBarComponent extends AppComponentBase {
     }
 
     menu: SideBarMenu = new SideBarMenu('MainMenu', 'MainMenu', [
+        new SideBarMenuItem('TaskTest', '', 'icon-home', '/app/main/tasksTest'),
         new SideBarMenuItem('Employee', '', 'icon-home', '/app/main/employees'),
         new SideBarMenuItem('Task', '', 'icon-home', '/app/main/tasks'),
         new SideBarMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'icon-home', '/app/admin/hostDashboard'),

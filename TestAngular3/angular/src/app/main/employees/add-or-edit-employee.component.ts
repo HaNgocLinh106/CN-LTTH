@@ -4,8 +4,9 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
-import { CreateEmployeeInput, EmployeeServiceProxy, TaskServiceProxy, UpdateEmployeeInput } from '@shared/service-proxies/service-proxies';
+import { CreateEmployeeInput, EmployeeListDto, EmployeeServiceProxy, TaskServiceProxy, UpdateEmployeeInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import * as moment from 'moment';
 
 @Component({
   selector: 'addOrEditEmployee',
@@ -20,34 +21,43 @@ export class AddOrEditEmployeeComponent extends AppComponentBase implements OnIn
 @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 active= false;
 saving= false;
-employee: CreateEmployeeInput= new CreateEmployeeInput();
+employee: EmployeeListDto= new EmployeeListDto();
   constructor(injector:Injector, private employeeService: EmployeeServiceProxy, private taskService: TaskServiceProxy) { 
     super(injector);
       this.employeeEdit=null;
   }
 
-  Show():void{
+  show(employeeId?:number):void{
+    if (employeeId) {
+      //Edit
+      this.employeeService.getEmployee(employeeId).subscribe((result) => {
+        this.employee =  result;
+        this.employee.birthDate = this.employee.birthDate  ?this.employee.birthDate.format('YYYY-MM-DD') : <any>undefined;
+      });
+
+    } else {
+      //Create
+      this.employee = new EmployeeListDto();
+    }
+
     this.active= true;
     this.modal.show();
+    console.log("test=",this.employee);
   }
-  save():void{
+  save():void{ 
+    this.employee.birthDate = this.employee.birthDate  ? moment(this.employee.birthDate.toString()) : <any>undefined;
     this.saving=true;
-    if(this.employeeEdit==null){
-      this.employeeService.createEmployee(this.employee)
-      // .pipe(
-      //   finalize(()=>{
-       
-      // }))
+    if(this.employee.id==null){
+      this.employeeService.createEmployee(<any>this.employee)
       .subscribe(result =>{
         this.saving=false;
         this.modalSave.emit(result);
         this.close();
-         this.employee.name="";
+        this.employee.name="";
       });
     }
     else{
-
-      this.employeeService.updateEmployee(this.employeeEdit)
+      this.employeeService.updateEmployee(this.employee)
       // .pipe(
       //   finalize(()=>{
        
@@ -67,6 +77,4 @@ employee: CreateEmployeeInput= new CreateEmployeeInput();
   }
   ngOnInit(): void {
   }
-
-
 }

@@ -969,6 +969,37 @@ namespace WS.Migrations
                     b.ToTable("AppChatMessages");
                 });
 
+            modelBuilder.Entity("WS.Employee_Task.EmployeeTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AssignedEmployeeId");
+
+                    b.Property<int?>("AssignedTask2Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedEmployeeId");
+
+                    b.HasIndex("AssignedTask2Id");
+
+                    b.ToTable("AppEmployeeTask2");
+                });
+
+            modelBuilder.Entity("WS.Employee_Task2.EmployeeTask2", b =>
+                {
+                    b.Property<int>("EmployeeId");
+
+                    b.Property<int>("Task2Id");
+
+                    b.HasKey("EmployeeId", "Task2Id");
+
+                    b.HasIndex("Task2Id");
+
+                    b.ToTable("EmployeeTask_2");
+                });
+
             modelBuilder.Entity("WS.Employees.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -985,6 +1016,19 @@ namespace WS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppEmployees");
+                });
+
+            modelBuilder.Entity("WS.EmployeeTasks.EmployeeTask", b =>
+                {
+                    b.Property<int>("EmployeeId");
+
+                    b.Property<int>("Task2Id");
+
+                    b.HasKey("EmployeeId", "Task2Id");
+
+                    b.HasIndex("Task2Id");
+
+                    b.ToTable("EmployeeTask");
                 });
 
             modelBuilder.Entity("WS.Friendships.Friendship", b =>
@@ -1198,7 +1242,30 @@ namespace WS.Migrations
 
                     b.HasIndex("AssignedEmployeeId");
 
-                    b.ToTable("AppTasks");
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("WS.Tasks.Task2", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(65536);
+
+                    b.Property<byte>("State");
+
+                    b.Property<int>("TenantId");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppTasks2");
                 });
 
             modelBuilder.Entity("WS.Editions.SubscribableEdition", b =>
@@ -1353,6 +1420,43 @@ namespace WS.Migrations
                     b.HasOne("WS.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
+                });
+
+            modelBuilder.Entity("WS.Employee_Task.EmployeeTask", b =>
+                {
+                    b.HasOne("WS.Employees.Employee", "AssignedEmployee")
+                        .WithMany()
+                        .HasForeignKey("AssignedEmployeeId");
+
+                    b.HasOne("WS.Tasks.Task2", "AssignedTask2")
+                        .WithMany()
+                        .HasForeignKey("AssignedTask2Id");
+                });
+
+            modelBuilder.Entity("WS.Employee_Task2.EmployeeTask2", b =>
+                {
+                    b.HasOne("WS.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WS.Tasks.Task2", "Task2")
+                        .WithMany()
+                        .HasForeignKey("Task2Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WS.EmployeeTasks.EmployeeTask", b =>
+                {
+                    b.HasOne("WS.Employees.Employee", "Employee")
+                        .WithMany("EmployeeTask")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WS.Tasks.Task2", "Task2")
+                        .WithMany("EmployeeTasks")
+                        .HasForeignKey("Task2Id")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WS.MultiTenancy.Payments.SubscriptionPayment", b =>

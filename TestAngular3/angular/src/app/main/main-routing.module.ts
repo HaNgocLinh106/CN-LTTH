@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { TasksTestComponent } from './tasks-test/tasks-test.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TestComponent } from './test/test.component';
 
@@ -13,6 +14,7 @@ import { TestComponent } from './test/test.component';
                 children: [
                     { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
                     { path: 'tasks', component: TasksComponent},
+                    { path: 'tasksTest', component: TasksTestComponent},
                     { path: 'employees', component: EmployeesComponent }
                 ]
             }

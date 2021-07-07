@@ -32,7 +32,7 @@ namespace WS.Employees.DTO
         [StringLength(Employee.maxNameLenght)]
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
-
+        public DateTime CreationTime { get; set; }
     }
 
     [AutoMapTo(typeof(Employee))]

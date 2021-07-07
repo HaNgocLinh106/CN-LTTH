@@ -93,7 +93,7 @@ export class TasksComponent extends AppComponentBase implements OnInit {
     }
   }
   showTaskModal(){
-     this.addOrEditTaskModal.Show();
+     this.addOrEditTaskModal.show();
   }
  onTaskUpdated(input:any){
    if(this.taskEdit==null){

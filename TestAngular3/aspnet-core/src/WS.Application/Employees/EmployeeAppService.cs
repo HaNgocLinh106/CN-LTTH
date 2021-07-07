@@ -11,6 +11,7 @@ using WS;
 using WS.Employees;
 using Abp.UI;
 using WS.Tasks;
+using WS.EmployeeTasks;
 
 namespace WS.Employees
 {
@@ -18,6 +19,7 @@ namespace WS.Employees
     {
         private readonly IRepository<Employee> _employeeRepository;
         private readonly IRepository<WS.Tasks.Task> _taskRepository;
+
         private readonly ITaskAppService _taskService;
         public EmployeeAppService(IRepository<Employee> employeeRepository, IRepository<WS.Tasks.Task> taskRepository, ITaskAppService taskService)
         {

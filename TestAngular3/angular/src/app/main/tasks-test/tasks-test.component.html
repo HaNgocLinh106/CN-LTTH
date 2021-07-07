@@ -1,0 +1,82 @@
+<div class="row">
+  <div style="width: 90%; margin: auto;">
+      <button class="btn btn-primary margin-bottom-10" id="btn-new-task" type="button" (click)="showTaskModal()">{{('NewTask')}}</button>
+      <ul class="list-group" id="TaskList">
+              <li class="list-group-item">
+                  <h2>
+                      {{l('TaskList')}}
+                      <span class="pull-right">
+                          <select name="taskState" class="form-control" [(ngModel)]="selectedState" (change)="getTasks()">
+                              <option *ngFor="let option of stateSelectedOptions" [ngValue]="option.value">{{option.text}}</option>
+                          </select>
+                      </span>
+                  </h2>
+              </li>
+              <li *ngFor="let task of tasks" class="list-group-item" style="display: block;" >
+                  <div class="item-context-left">
+                      <h5 class="pull-right label" [ngClass]="getTaskLabel(task)">{{getTaskState(task)}}</h5>
+                      <h4 class="list-group-item-heading" (click)="getTask(task,1)" >{{task.title}}</h4>
+                      <div class="list-group-item-text">
+                          {{task.creationTime?.format('LLL')}}|{{task.employeeNames!=""?task.employeeNames:l('Unassigned')}}
+                      </div>   
+                  </div>
+                 
+                  <div class="container-feature" >
+                      <div class="btn-feature" >     
+                          <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>
+                          <button class="btn btn-primary" (click)="getTask(task,0)">Assign</button>
+                        </div>   
+                  </div>
+              </li>
+      </ul>
+  </div>
+</div>
+<!-- Modal-add-or-edit-task -->
+<addOrEditTaskTestModal [taskEdit]="taskEdit" #addOrEditTaskTestModal (modalSave)="onTaskUpdated($event)"></addOrEditTaskTestModal>
+<!-- Modal delete Task -->
+<div  bsModal="" #deleteTaskModal="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="deleteTaskModal" aria-hidden="true" >
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+              <div class="modal-body">
+                  <h4 class="modal-title">
+                      <span>Do you want to delete this task</span>
+                   </h4>
+              </div>
+              <div class="modal-footer">
+                  <button  type="button" class="btn btn-default" (click)="cancel()">
+                      {{l("No")}}
+                  </button>
+                  <button type="button" class="btn btn-primary blue" (click)="accept()">
+                      <span>{{l("Yes")}}</span>
+                  </button>
+              </div>
+      </div>
+  </div>
+</div>
+<!-- Modal-show-list-employee -->
+<div  bsModal="" #listEmployee="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="listEmployee" aria-hidden="true" >
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">
+                  Select Employee
+              </h4>
+          </div>
+                  <ul class="list-group">
+                        <li class="list-group-item"  *ngFor="let employee of employees">
+                          <input type="checkbox" data-md-icheck  #checkdelet id="{{employee.id}" name="checkEmployee" value="{{employee.id}}" (click)="selectID(employee,$event)"/> 
+                          {{employee.name}}  
+                        </li>
+                  </ul>
+              <div class="modal-footer">
+                  <button  type="button" class="btn btn-default" (click)="close()">
+                      {{l("Cancel")}}
+                  </button>
+                  <button type="button" class="btn btn-primary blue" (click)="saveTaskAssigned()">
+                      <span>{{l("Save")}}</span>
+                  </button>
+              </div>
+      </div>
+  </div>
+</div>

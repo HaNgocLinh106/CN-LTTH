@@ -30,7 +30,7 @@ stateSelectedOptions=[
         // this.taskEdit.state;
   }
 
-  Show():void{
+  show():void{
     this.active= true;
     this.modal.show();
     console.log("task state=", this.taskState);

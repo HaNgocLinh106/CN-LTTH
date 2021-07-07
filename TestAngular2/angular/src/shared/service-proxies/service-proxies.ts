@@ -9570,6 +9570,7 @@ export interface IListResultDtoOfEmployeeListDto {
 export class EmployeeListDto implements IEmployeeListDto {
     name: string;
     birthDate: moment.Moment;
+    creationTime: moment.Moment;
     id: number;
 
     constructor(data?: IEmployeeListDto) {
@@ -9585,6 +9586,7 @@ export class EmployeeListDto implements IEmployeeListDto {
         if (data) {
             this.name = data["name"];
             this.birthDate = data["birthDate"] ? moment(data["birthDate"].toString()) : <any>undefined;
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
             this.id = data["id"];
         }
     }
@@ -9599,6 +9601,7 @@ export class EmployeeListDto implements IEmployeeListDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["birthDate"] = this.birthDate ? this.birthDate.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -9607,6 +9610,7 @@ export class EmployeeListDto implements IEmployeeListDto {
 export interface IEmployeeListDto {
     name: string;
     birthDate: moment.Moment;
+    creationTime: moment.Moment;
     id: number;
 }
 
