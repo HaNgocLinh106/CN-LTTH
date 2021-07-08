@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using WS.Employees;
+using WS.EmployeeTasks;
 using WS.Tasks;
 
 namespace WS.Tasks2.DTO
@@ -21,6 +23,7 @@ namespace WS.Tasks2.DTO
         public string Description { get; set; }
         public DateTime CreationTime { get; set; }
         public TaskState State { get; set; }
+        //public List<Employee> Employees { get; set; }
         public List<string> EmployeeNames { get; set; }
     }
   
@@ -73,10 +76,10 @@ namespace WS.Tasks2.DTO
 
 
     }
-    public class EmployeeTaskList
-    {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public int Task2Id { get; set; }
-    }
+    //public class EmployeeTaskList
+    //{
+    //    public int Id { get; set; }
+    //    public int EmployeeId { get; set; }
+    //    public int Task2Id { get; set; }
+    //}
 }

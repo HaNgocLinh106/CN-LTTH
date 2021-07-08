@@ -5,9 +5,6 @@ using WS.Authorization.Roles;
 using WS.Authorization.Users;
 using WS.Chat;
 using WS.Editions;
-
-using WS.Employee_Task2;
-using WS.Employee_Task2.Configuration;
 using WS.Employees;
 using WS.EmployeeTasks;
 
@@ -40,9 +37,7 @@ namespace WS.EntityFrameworkCore
         public DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        //public virtual DbSet<WS.Employee_Task.EmployeeTask> EmployeeTask2 { get; set; }
         public virtual DbSet<EmployeeTask> EmployeeTask { get; set; }
-        //public virtual DbSet<EmployeeTask2> EmployeeTask_2 { get; set; }
         public virtual DbSet<Task2> Tasks2 { get; set; }
         public WSDbContext(DbContextOptions<WSDbContext> options)
             : base(options)
@@ -54,8 +49,6 @@ namespace WS.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
             TaskEntityConfiguration.Configure(modelBuilder.Entity<Task>());
-            modelBuilder.Entity<EmployeeTask2>()
-                .HasKey(c => new { c.EmployeeId, c.Task2Id });
             modelBuilder.Entity<EmployeeTask>()
                 .HasKey(c => new { c.EmployeeId, c.Task2Id });
 

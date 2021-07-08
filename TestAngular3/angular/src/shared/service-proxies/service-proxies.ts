@@ -1788,6 +1788,58 @@ export class EmployeeServiceProxy {
     /**
      * @return Success
      */
+    getListEmployeeAssign(id: number): Observable<EmployeeListAssignOutput[]> {
+        let url_ = this.baseUrl + "/api/services/app/Employee/GetListEmployeeAssign?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetListEmployeeAssign(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetListEmployeeAssign(response_);
+                } catch (e) {
+                    return <Observable<EmployeeListAssignOutput[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<EmployeeListAssignOutput[]>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetListEmployeeAssign(response: Response): Observable<EmployeeListAssignOutput[]> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(EmployeeListAssignOutput.fromJS(item));
+            }
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<EmployeeListAssignOutput[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
     getListEmployee(): Observable<EmployeeListDetailDto[]> {
         let url_ = this.baseUrl + "/api/services/app/Employee/GetListEmployee";
         url_ = url_.replace(/[?&]$/, "");
@@ -5129,7 +5181,7 @@ export class Task2ServiceProxy {
     /**
      * @return Success
      */
-    getAllTaskDetail(state: State3): Observable<ListResultDtoOfTaskListDto2> {
+    getAllTaskDetail(state: State3): Observable<TaskListDto2[]> {
         let url_ = this.baseUrl + "/api/services/app/Task2/GetAllTaskDetail?";
         if (state !== undefined)
             url_ += "State=" + encodeURIComponent("" + state) + "&"; 
@@ -5150,14 +5202,14 @@ export class Task2ServiceProxy {
                 try {
                     return this.processGetAllTaskDetail(response_);
                 } catch (e) {
-                    return <Observable<ListResultDtoOfTaskListDto2>><any>Observable.throw(e);
+                    return <Observable<TaskListDto2[]>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<ListResultDtoOfTaskListDto2>><any>Observable.throw(response_);
+                return <Observable<TaskListDto2[]>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetAllTaskDetail(response: Response): Observable<ListResultDtoOfTaskListDto2> {
+    protected processGetAllTaskDetail(response: Response): Observable<TaskListDto2[]> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -5165,13 +5217,17 @@ export class Task2ServiceProxy {
             const _responseText = response.text();
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfTaskListDto2.fromJS(resultData200) : new ListResultDtoOfTaskListDto2();
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(TaskListDto2.fromJS(item));
+            }
             return Observable.of(result200);
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<ListResultDtoOfTaskListDto2>(<any>null);
+        return Observable.of<TaskListDto2[]>(<any>null);
     }
 
     /**
@@ -9948,6 +10004,53 @@ export interface ICreateEmployeeInput {
     creationTime: moment.Moment;
 }
 
+export class EmployeeListAssignOutput implements IEmployeeListAssignOutput {
+    id: number;
+    name: string;
+    age: number;
+    selected: boolean;
+
+    constructor(data?: IEmployeeListAssignOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.name = data["name"];
+            this.age = data["age"];
+            this.selected = data["selected"];
+        }
+    }
+
+    static fromJS(data: any): EmployeeListAssignOutput {
+        let result = new EmployeeListAssignOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["age"] = this.age;
+        data["selected"] = this.selected;
+        return data; 
+    }
+}
+
+export interface IEmployeeListAssignOutput {
+    id: number;
+    name: string;
+    age: number;
+    selected: boolean;
+}
+
 export class EmployeeListDetailDto implements IEmployeeListDetailDto {
     id: number;
     birthDate: moment.Moment;
@@ -14247,49 +14350,6 @@ export interface IUpdateTaskInput {
     description: string;
     assignedEmployeeId: number;
     state: UpdateTaskInputState;
-}
-
-export class ListResultDtoOfTaskListDto2 implements IListResultDtoOfTaskListDto2 {
-    items: TaskListDto2[];
-
-    constructor(data?: IListResultDtoOfTaskListDto2) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(TaskListDto2.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ListResultDtoOfTaskListDto2 {
-        let result = new ListResultDtoOfTaskListDto2();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IListResultDtoOfTaskListDto2 {
-    items: TaskListDto2[];
 }
 
 export class TaskListDto2 implements ITaskListDto2 {

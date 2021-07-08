@@ -22,6 +22,14 @@ namespace WS.Employees.DTO
         public int Age { get; set; }
 
     }
+    public class EmployeeListAssignOutput
+    {
+        public int? Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public bool Selected { get; set; }
+
+    }
     [AutoMapFrom(typeof(Employee))]
 
     public class EmployeeListDto : EntityDto

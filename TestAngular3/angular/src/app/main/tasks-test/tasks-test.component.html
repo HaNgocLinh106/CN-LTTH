@@ -15,10 +15,22 @@
               <li *ngFor="let task of tasks" class="list-group-item" style="display: block;" >
                   <div class="item-context-left">
                       <h5 class="pull-right label" [ngClass]="getTaskLabel(task)">{{getTaskState(task)}}</h5>
-                      <h4 class="list-group-item-heading" (click)="getTask(task,1)" >{{task.title}}</h4>
+                      <h4 class="list-group-item-heading" (click)="getTask(task,1)" ><b>{{task.title}}</b></h4>
                       <div class="list-group-item-text">
-                          {{task.creationTime?.format('LLL')}}|{{task.employeeNames!=""?task.employeeNames:l('Unassigned')}}
-                      </div>   
+                          {{task.creationTime?.format('LLL')}}
+                      </div>    
+                      <div >List Employee Assigned:
+                        <div style="margin-left: 40px;" class="list-group-item-text" *ngIf="task.employeeNames!=''">
+                            <li *ngFor="let employee of task.employeeNames">
+                                <span >{{employee}}</span>
+                            </li>            
+                          </div> 
+                          <div *ngIf="task.employeeNames==''">
+                             <span>   {{l('Unassigned')}}</span>   
+                          </div>
+                      </div>
+                      
+                     
                   </div>
                  
                   <div class="container-feature" >
@@ -55,17 +67,20 @@
   </div>
 </div>
 <!-- Modal-show-list-employee -->
-<div  bsModal="" #listEmployee="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="listEmployee" aria-hidden="true" >
+<div  bsModal="" #listEmployee="bs-modal" class="modal fade" tabIndex="-1" role="dialog" aria-labelledby="listEmployee" aria-hidden="true" [config]="{backdrop: 'static'}">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
               <h4 class="modal-title">
                   Select Employee
               </h4>
+              <button type="button" class="close" (click)="close()" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
           </div>
                   <ul class="list-group">
                         <li class="list-group-item"  *ngFor="let employee of employees">
-                          <input type="checkbox" data-md-icheck  #checkdelet id="{{employee.id}" name="checkEmployee" value="{{employee.id}}" (click)="selectID(employee,$event)"/> 
+                          <input type="checkbox" [checked]="!employee.selected" id="{{employee.id}" name="checkEmployee" value="{{employee.id}}" (click)="selectID(employee,$event)"/> 
                           {{employee.name}}  
                         </li>
                   </ul>

@@ -28,7 +28,6 @@ stateSelectedOptions=[
 
   constructor(injector:Injector, private taskService: Task2ServiceProxy) { 
     super(injector);
-        // this.taskEdit.state;
   }
 
   show():void{
@@ -39,7 +38,6 @@ stateSelectedOptions=[
    
   }
   setState(state){
-    // this.taskEdit.state= state;
     console.log("state=", state);
   }
   save():void{
@@ -53,8 +51,6 @@ stateSelectedOptions=[
       });
     }
     else{
-    
-      //  this.taskEdit.state=this.selectedOption;
       console.log("modal co list task=", this.taskEdit);
       console.log("select  =",this.selectedOption);
       this.taskService.update(this.taskEdit)

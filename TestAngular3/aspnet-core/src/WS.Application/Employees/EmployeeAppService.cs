@@ -19,13 +19,14 @@ namespace WS.Employees
     {
         private readonly IRepository<Employee> _employeeRepository;
         private readonly IRepository<WS.Tasks.Task> _taskRepository;
-
+        private readonly IRepository<Task2> _task2Repository;
         private readonly ITaskAppService _taskService;
-        public EmployeeAppService(IRepository<Employee> employeeRepository, IRepository<WS.Tasks.Task> taskRepository, ITaskAppService taskService)
+        public EmployeeAppService(IRepository<Employee> employeeRepository, IRepository<WS.Tasks.Task> taskRepository, ITaskAppService taskService, IRepository<Task2> task2Repository)
         {
             _employeeRepository = employeeRepository;
             _taskRepository = taskRepository;
             _taskService = taskService;
+            _task2Repository = task2Repository;
         }
         public async Task<ListResultDto<EmployeeListDto>> GetAll()
         {
@@ -69,22 +70,59 @@ namespace WS.Employees
             }
 
         }
+        public async Task<List<EmployeeListAssignOutput>> GetListEmployeeAssign(GetEmployeeInput input)
+        {
+
+            var employees = await _employeeRepository
+                .GetAll()
+                .Include(e => e.EmployeeTasks)
+                .ThenInclude(f => f.Task2)
+                .ToListAsync();
+            return employees.Select(x => new EmployeeListAssignOutput
+            {
+                Id= x.Id,
+                Name=x.Name,
+                Selected = x.EmployeeTasks.Find(y=>y.Task2Id==input.Id)==null?true:false
+
+            }).ToList();
+            //var listEmployeeAssign = new List<EmployeeListAssignOutput>();
+            //foreach (var employee in employees)
+            //{
+            //    var checkExistTask = true;
+            //    var employeeAssign = new EmployeeListAssignOutput();
+            //    employeeAssign.Id = employee.Id;
+            //    employeeAssign.Name = employee.Name;
+            //    foreach (var employeeTask in employee.EmployeeTasks)
+            //    {
+            //        if (employeeTask.Task2Id == input.Id)
+            //        {
+            //            checkExistTask = false;
+            //            break;
+            //        }
+            //    }
+            //    employeeAssign.Selected = checkExistTask;
+            //    listEmployeeAssign.Add(employeeAssign);
+            //}
+            //return listEmployeeAssign;
+        }
         public async Task<List<EmployeeListDetailDto>> GetListEmployee()
         {
 
             var employees = await _employeeRepository
                 .GetAll()
-                .Include(e => e.Tasks)
+                .Include(e => e.EmployeeTasks)
+                .ThenInclude(t => t.Task2)
                 .ToListAsync();
-            return employees.Select(e => new EmployeeListDetailDto
+
+            var a = employees.Select(x => new EmployeeListDetailDto
             {
-                Id = e.Id,
-                BirthDate = e.BirthDate,
-                Age = e.Age,
-                Name = e.Name,
-                TaskPending = e.Tasks.Count(t => t.State == TaskState.Open),
-                TaskComplete = e.Tasks.Count(t => t.State == TaskState.Completed)
+                Id = x.Id,
+                Name = x.Name,
+                Age = x.Age,
+                TaskPending = x.EmployeeTasks.Count(v => v.Task2.State == TaskState.Open),
+                TaskComplete = x.EmployeeTasks.Count(v => v.Task2.State == TaskState.Completed),
             }).ToList();
+            return a;
             //C2:
             //return await (
             //    from e in _employeeRepository.GetAll()
@@ -132,22 +170,34 @@ namespace WS.Employees
         {
             try
             {
-                foreach (var id in input.EmployeeIds)
+                var employees = await _employeeRepository
+                    .GetAll()
+                    .Include(x => x.EmployeeTasks)
+                    .Where(e => input.EmployeeIds.Contains(e.Id))
+                    //.Select(e => new { })
+                    .ToListAsync();
+                //var count = employees.RemoveAll(x => x.Id != 0);
+                //employees.RemoveRange(0, employees.Count());
+                foreach (var employee in employees)
                 {
-                    var employee = _employeeRepository
-                        .GetAll()
-                        .Include(e => e.Tasks)
-                        .FirstOrDefault(e => e.Id == id);//
-
-                    if (employee == null)
-                    {
-                        throw new UserFriendlyException("Employee not found.");
-                    }
-
-                    employee.Tasks.ForEach(t => t.AssignedEmployeeId = null);
-
                     await _employeeRepository.DeleteAsync(employee);
                 }
+                //foreach (var id in input.EmployeeIds)
+                //{
+                //    var employee = _employeeRepository
+                //        .GetAll()
+                //        .Include(e => e.Tasks)
+                //        .FirstOrDefault(e => e.Id == id);//
+
+                //    if (employee == null)
+                //    {
+                //        throw new UserFriendlyException("Employee not found.");
+                //    }
+
+                //    employee.Tasks.ForEach(t => t.AssignedEmployeeId = null);
+
+                //    await _employeeRepository.DeleteAsync(employee);
+                //}
 
             }
             catch (Exception e)

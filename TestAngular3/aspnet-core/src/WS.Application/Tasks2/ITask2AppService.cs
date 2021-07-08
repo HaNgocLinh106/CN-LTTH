@@ -9,7 +9,7 @@ namespace WS.Tasks2
 {
     public interface ITask2AppService
     {
-        Task<ListResultDto<TaskListDto2>> GetAllTaskDetail(WS.Tasks2.DTO.GetAllTaskInput input);
+        Task<List<TaskListDto2>> GetAllTaskDetail(WS.Tasks2.DTO.GetAllTaskInput input);
         //Task<TaskListDto2> Create(WS.Tasks2.DTO.CreateTaskInput input);
     }
 }
