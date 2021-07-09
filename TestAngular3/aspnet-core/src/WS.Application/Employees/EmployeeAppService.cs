@@ -43,18 +43,6 @@ namespace WS.Employees
             }
 
         }
-
-        //public void GetAll1()
-        //{
-        //    var a = 1;
-
-        //    var pageObject = (from t in _context.Tasks
-        //                      join emp in _context.Employees on t.AssignedEmployeeId equals emp.Id
-
-        //                      select emp.Id)
-        //         .SingleOrDefault();
-        //}
-
         public async Task<EmployeeListDto> CreateEmployee(CreateEmployeeInput input)
         {
             try
@@ -85,25 +73,6 @@ namespace WS.Employees
                 Selected = x.EmployeeTasks.Find(y=>y.Task2Id==input.Id)==null?true:false
 
             }).ToList();
-            //var listEmployeeAssign = new List<EmployeeListAssignOutput>();
-            //foreach (var employee in employees)
-            //{
-            //    var checkExistTask = true;
-            //    var employeeAssign = new EmployeeListAssignOutput();
-            //    employeeAssign.Id = employee.Id;
-            //    employeeAssign.Name = employee.Name;
-            //    foreach (var employeeTask in employee.EmployeeTasks)
-            //    {
-            //        if (employeeTask.Task2Id == input.Id)
-            //        {
-            //            checkExistTask = false;
-            //            break;
-            //        }
-            //    }
-            //    employeeAssign.Selected = checkExistTask;
-            //    listEmployeeAssign.Add(employeeAssign);
-            //}
-            //return listEmployeeAssign;
         }
         public async Task<List<EmployeeListDetailDto>> GetListEmployee()
         {
@@ -174,14 +143,20 @@ namespace WS.Employees
                     .GetAll()
                     .Include(x => x.EmployeeTasks)
                     .Where(e => input.EmployeeIds.Contains(e.Id))
-                    //.Select(e => new { })
                     .ToListAsync();
-                //var count = employees.RemoveAll(x => x.Id != 0);
+
+
+
+                //await _employeeRepository.DeleteAsync(e => input.EmployeeIds.Contains(e.))
+
                 //employees.RemoveRange(0, employees.Count());
                 foreach (var employee in employees)
                 {
                     await _employeeRepository.DeleteAsync(employee);
                 }
+
+
+
                 //foreach (var id in input.EmployeeIds)
                 //{
                 //    var employee = _employeeRepository
