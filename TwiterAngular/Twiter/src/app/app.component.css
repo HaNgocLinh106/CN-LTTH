@@ -1,0 +1,43 @@
+.ng-body{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    font-size: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.body-left{
+    position: fixed;
+    width: 317px;
+    height: 100%;
+}
+.body-right{
+    position:absolute;
+    top:0;
+    right: 0;
+    width: calc(100% - 317px);
+    height: 100vh;
+}
+.body-right .ng-container{
+    width: 990px; 
+    /* display: flex; */
+    background-color: darksalmon;
+    
+}
+.ng-container .ng-content{
+    width: 566px;
+    height: 100vh;
+    padding: 0 16px 0 16px;
+    float: left;
+}
+.ng-container .right-menu{
+    width: 350px;
+    height: 100vh;
+    background-color: yellow;
+    float: right;
+  
+}
